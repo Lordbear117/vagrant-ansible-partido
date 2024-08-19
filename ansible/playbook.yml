@@ -1,0 +1,11 @@
+---
+- name: Crear archivo partido.txt con los datos de los tenistas
+  hosts: all
+  vars_files:
+    - roles/partido/vars/partido_vars.yml
+  vars:
+    first_name: "Aitor"
+    last_name: "Menta"
+    city: "Madrid"
+  roles:
+    - partido

@@ -1,0 +1,18 @@
+---
+- name: Obtener información del segundo tenista desde la API
+  uri:
+    url: "https://random-data-api.com/api/users/random_user?size=1"
+    method: GET
+    return_content: yes
+  register: json
+
+- name: Crear el archivo partido.txt con los datos de los tenistas
+  template:
+    src: partido.txt.j2
+    dest: /vagrant/partido.txt
+  vars:
+    second_first_name: "{{ (json.content | from_json)[0].first_name }}"
+    second_last_name: "{{ (json.content | from_json)[0].last_name }}"
+    second_city: "{{ (json.content | from_json)[0].address.city }}"
+    second_id: "{{ (json.content | from_json)[0].id }}"
+    match_date: "{{ ansible_date_time.iso8601 }}"
